@@ -34,7 +34,7 @@ const Login = () => {
       </View>
       <View>
         <TouchableOpacity style={styles.button}>
-          <Text>Login</Text>
+          <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.signupCont}>
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
   },
   titleCont: {
     // backgroundColor: "#000",
-    marginTop: "40%",
+    marginTop: "65%",
   },
   title: {
     fontSize: 50,
@@ -74,11 +74,11 @@ const styles = StyleSheet.create({
     width: "100%",
     // marginBottom: "100%",
     alignItems: "center",
-    marginTop: "30%",
+    marginTop: "10%",
     color: "#fff",
   },
   input: {
-    height: 40,
+    height: 50,
     width: "90%",
     margin: 12,
     borderWidth: 1,
@@ -86,15 +86,23 @@ const styles = StyleSheet.create({
     borderColor: "#fff",
     borderRadius: 10,
     color: "#fff",
+    backgroundColor: '#333',
   },
   button: {
     alignItems: "center",
     backgroundColor: "#DDDDDD",
-    padding: 10,
+    padding: 90,
     borderRadius: 10,
+    paddingVertical: 15,
+    marginTop: 10,
+  },
+  buttonText: {
+    color: '#000',
+    fontSize: 20,
+    textAlign: 'center',
   },
   signupCont: {
-    marginTop: "70%",
+    marginTop: "63%",
     flexDirection: "row",
   },
   dontAccount: {
