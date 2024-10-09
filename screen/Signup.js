@@ -18,8 +18,8 @@ export default function Example() {
     password: '',
   });
   const navigation = useNavigation();
-  const onSignup = () => {
-    navigation.navigate("SignUp");
+  const onLogin = () => {
+    navigation.navigate("Login");
   };
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#e8ecf4' }}>
@@ -111,12 +111,10 @@ export default function Example() {
             </TouchableOpacity>
           </View>
 
-          {/* <TouchableOpacity
-            onPress={() => {
-              // handle link
-            }}>
-            <Text style={styles.formLink}>Forgot password?</Text>
-          </TouchableOpacity> */}
+          <TouchableOpacity
+            onPress={onLogin}>
+            <Text style={styles.formLink}>Login</Text>
+          </TouchableOpacity>
         </View>
       </KeyboardAwareScrollView>
 
@@ -174,7 +172,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   formLink: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: '600',
     color: '#FF6301',
     textAlign: 'center',
