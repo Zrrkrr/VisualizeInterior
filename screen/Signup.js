@@ -1,95 +1,230 @@
+import React, { useState } from 'react';
 import {
   StyleSheet,
-  Text,
+  SafeAreaView,
   View,
-  TextInput,
+  Image,
+  Text,
   TouchableOpacity,
-} from "react-native";
-// import React from "react";
-import React, { useState } from "react";
+  TextInput,
+} from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useNavigation } from "@react-navigation/native";
+const logoImg = require("../assets/visualize.png");
 
-const SignupScreen = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-
-  const handleSignup = () => {
-    // Add your signup logic here
-    console.log("Signup pressed");
+export default function Example() {
+  const [form, setForm] = useState({
+    email: '',
+    password: '',
+  });
+  const navigation = useNavigation();
+  const onSignup = () => {
+    navigation.navigate("SignUp");
   };
-
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Sign-Up</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        placeholderTextColor="#888"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-        autoCapitalize="none"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        placeholderTextColor="#888"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Confirm Password"
-        placeholderTextColor="#888"
-        value={confirmPassword}
-        onChangeText={setConfirmPassword}
-        secureTextEntry
-      />
-      <TouchableOpacity style={styles.button} onPress={handleSignup}>
-        <Text style={styles.buttonText}>Sign Up</Text>
-      </TouchableOpacity>
-    </View>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#e8ecf4' }}>
+      <KeyboardAwareScrollView style={styles.container}>
+        <View style={styles.header}>
+          <Image
+            alt="App Logo"
+            resizeMode="contain"
+            style={styles.headerImg}
+            source={logoImg} />
+
+          <Text style={styles.title}>
+            Sign in to <Text style={{ color: '#FCC714' }}>Visua</Text><Text style={{ color: '#FF6301' }}>lize</Text>
+          </Text>
+
+          <Text style={styles.subtitle}>
+            Your new home awaits!
+          </Text>
+        </View>
+
+        <View style={styles.form}>
+          <View style={styles.input}>
+            <Text style={styles.inputLabel}>Company name</Text>
+
+            <TextInput
+              autoCapitalize="none"
+              autoCorrect={false}
+              clearButtonMode="while-editing"
+              // keyboardType="email-address"
+              onChangeText={company => setForm({ ...form, company })}
+              placeholder="Example: Visualize Interior Design"
+              placeholderTextColor="#6b7280"
+              style={styles.inputControl}
+              value={form.company} />
+          </View>
+
+          <View style={styles.input}>
+            <Text style={styles.inputLabel}>Email address</Text>
+
+            <TextInput
+              autoCapitalize="none"
+              autoCorrect={false}
+              clearButtonMode="while-editing"
+              keyboardType="email-address"
+              onChangeText={email => setForm({ ...form, email })}
+              placeholder="john@example.com"
+              placeholderTextColor="#6b7280"
+              style={styles.inputControl}
+              value={form.email} />
+          </View>
+
+          
+
+          <View style={styles.input}>
+            <Text style={styles.inputLabel}>Password</Text>
+
+            <TextInput
+              autoCorrect={false}
+              clearButtonMode="while-editing"
+              onChangeText={password => setForm({ ...form, password })}
+              placeholder="********"
+              placeholderTextColor="#6b7280"
+              style={styles.inputControl}
+              secureTextEntry={true}
+              value={form.password} />
+          </View>
+          <View style={styles.input}>
+            <Text style={styles.inputLabel}>Confirm Password</Text>
+
+            <TextInput
+              autoCorrect={false}
+              clearButtonMode="while-editing"
+              onChangeText={cnfpassword => setForm({ ...form, cnfpassword })}
+              placeholder="********"
+              placeholderTextColor="#6b7280"
+              style={styles.inputControl}
+              secureTextEntry={true}
+              value={form.cnfpassword} />
+          </View>
+
+          <View style={styles.formAction}>
+            <TouchableOpacity
+              onPress={() => {
+                // handle onPress
+              }}>
+              <View style={styles.btn}>
+                <Text style={styles.btnText}>Sign In</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+
+          {/* <TouchableOpacity
+            onPress={() => {
+              // handle link
+            }}>
+            <Text style={styles.formLink}>Forgot password?</Text>
+          </TouchableOpacity> */}
+        </View>
+      </KeyboardAwareScrollView>
+
+      {/* <TouchableOpacity
+        onPress={onSignup}>
+        <Text style={styles.formFooter}>
+          Don't have an account?{' '}
+          <Text style={{ textDecorationLine: 'underline' }}>Sign up</Text>
+        </Text>
+      </TouchableOpacity> */}
+    </SafeAreaView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "#000", // Black background
-    justifyContent: "center",
-    paddingHorizontal: 20,
+    paddingVertical: 24,
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: 0,
   },
   title: {
-    fontSize: 50,
-    fontWeight: "bold",
-    color: "#fff",
-    textAlign: "center",
-    marginBottom: 40,
+    fontSize: 31,
+    fontWeight: '700',
+    color: '#1D2A32',
+    marginBottom: 6,
   },
+  subtitle: {
+    fontSize: 15,
+    fontWeight: '500',
+    color: '#929292',
+  },
+  /** Header */
+  header: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 36,
+  },
+  headerImg: {
+    width: 170,
+    height: 100,
+    alignSelf: 'center',
+    marginBottom: 36,
+  },
+  /** Form */
+  form: {
+    marginBottom: 24,
+    paddingHorizontal: 24,
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: 0,
+  },
+  formAction: {
+    marginTop: 4,
+    marginBottom: 16,
+  },
+  formLink: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#FF6301',
+    textAlign: 'center',
+  },
+  formFooter: {
+    paddingVertical: 24,
+    fontSize: 15,
+    fontWeight: '600',
+    color: '#222',
+    textAlign: 'center',
+    letterSpacing: 0.15,
+  },
+  /** Input */
   input: {
+    marginBottom: 16,
+  },
+  inputLabel: {
+    fontSize: 17,
+    fontWeight: '600',
+    color: '#222',
+    marginBottom: 8,
+  },
+  inputControl: {
     height: 50,
-    backgroundColor: "#333",
-    color: "#fff",
-    borderRadius: 10,
-    paddingHorizontal: 15,
-    marginBottom: 20,
-    borderColor: "#fff",
+    backgroundColor: '#fff',
+    paddingHorizontal: 16,
+    borderRadius: 12,
+    fontSize: 15,
+    fontWeight: '500',
+    color: '#222',
     borderWidth: 1,
+    borderColor: '#C9D3DB',
+    borderStyle: 'solid',
   },
-  button: {
-    backgroundColor: "#fff",
-    paddingVertical: 15,
-    borderRadius: 10,
-    marginTop: 10,
-    width: "70%", // Button width decreased to 70% of the container width
-    alignSelf: "center", // Center the button
+  /** Button */
+  btn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 30,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderWidth: 2,
+    backgroundColor: '#FCC714',
+    borderColor: '#FF6301',
   },
-  buttonText: {
-    color: "#000",
-    fontSize: 20,
-    textAlign: "center",
+  btnText: {
+    fontSize: 18,
+    lineHeight: 26,
+    fontWeight: '600',
+    color: '#333',
   },
 });
-
-export default SignupScreen;
