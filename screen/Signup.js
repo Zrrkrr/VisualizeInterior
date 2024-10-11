@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   StyleSheet,
   SafeAreaView,
@@ -7,37 +7,61 @@ import {
   Text,
   TouchableOpacity,
   TextInput,
-} from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+} from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useNavigation } from "@react-navigation/native";
+import { auth } from "../firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+// import  { getAuth, signInWithEmailAndPassword } from '@react-native-firebase/auth';
+
 const logoImg = require("../assets/visualize.png");
 
-export default function Example() {
-  const [form, setForm] = useState({
-    email: '',
-    password: '',
-  });
+export default function SignUp() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [company, setCompany] = useState("");
+  const [cnfpassword, setCnfPassword] = useState("");
   const navigation = useNavigation();
+
+  const handleSignUp = () => {
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredentials) => {
+        const data = {
+          _id: userCredentials?.user.uid,
+          company: company,
+          providerData: userCredentials?.user.providerData[0],
+        };
+
+        navigation.navigate("Login");
+
+        const user = userCredentials.user;
+        console.log(user);
+      })
+      .catch((error) => {
+        alert(error.message);
+        console.log(error.message);
+      });
+  };
   const onLogin = () => {
     navigation.navigate("Login");
   };
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#e8ecf4' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#e8ecf4" }}>
       <KeyboardAwareScrollView style={styles.container}>
         <View style={styles.header}>
           <Image
             alt="App Logo"
             resizeMode="contain"
             style={styles.headerImg}
-            source={logoImg} />
+            source={logoImg}
+          />
 
           <Text style={styles.title}>
-            Sign in to <Text style={{ color: '#FCC714' }}>Visua</Text><Text style={{ color: '#FF6301' }}>lize</Text>
+            Sign in to <Text style={{ color: "#FCC714" }}>Visua</Text>
+            <Text style={{ color: "#FF6301" }}>lize</Text>
           </Text>
 
-          <Text style={styles.subtitle}>
-            Your new home awaits!
-          </Text>
+          <Text style={styles.subtitle}>Your new home awaits!</Text>
         </View>
 
         <View style={styles.form}>
@@ -49,11 +73,12 @@ export default function Example() {
               autoCorrect={false}
               clearButtonMode="while-editing"
               // keyboardType="email-address"
-              onChangeText={company => setForm({ ...form, company })}
               placeholder="Example: Visualize Interior Design"
               placeholderTextColor="#6b7280"
               style={styles.inputControl}
-              value={form.company} />
+              value={company}
+              onChangeText={setCompany}
+            />
           </View>
 
           <View style={styles.input}>
@@ -64,14 +89,13 @@ export default function Example() {
               autoCorrect={false}
               clearButtonMode="while-editing"
               keyboardType="email-address"
-              onChangeText={email => setForm({ ...form, email })}
               placeholder="john@example.com"
               placeholderTextColor="#6b7280"
               style={styles.inputControl}
-              value={form.email} />
+              value={email}
+              onChangeText={setEmail}
+            />
           </View>
-
-          
 
           <View style={styles.input}>
             <Text style={styles.inputLabel}>Password</Text>
@@ -79,12 +103,13 @@ export default function Example() {
             <TextInput
               autoCorrect={false}
               clearButtonMode="while-editing"
-              onChangeText={password => setForm({ ...form, password })}
               placeholder="********"
               placeholderTextColor="#6b7280"
               style={styles.inputControl}
               secureTextEntry={true}
-              value={form.password} />
+              value={password}
+              onChangeText={setPassword}
+            />
           </View>
           <View style={styles.input}>
             <Text style={styles.inputLabel}>Confirm Password</Text>
@@ -92,27 +117,26 @@ export default function Example() {
             <TextInput
               autoCorrect={false}
               clearButtonMode="while-editing"
-              onChangeText={cnfpassword => setForm({ ...form, cnfpassword })}
               placeholder="********"
               placeholderTextColor="#6b7280"
               style={styles.inputControl}
               secureTextEntry={true}
-              value={form.cnfpassword} />
+              value={cnfpassword}
+              onChangeText={setCnfPassword}
+            />
           </View>
 
           <View style={styles.formAction}>
             <TouchableOpacity
-              onPress={() => {
-                // handle onPress
-              }}>
+              onPress={handleSignUp}
+            >
               <View style={styles.btn}>
                 <Text style={styles.btnText}>Sign In</Text>
               </View>
             </TouchableOpacity>
           </View>
 
-          <TouchableOpacity
-            onPress={onLogin}>
+          <TouchableOpacity onPress={onLogin}>
             <Text style={styles.formLink}>Login</Text>
           </TouchableOpacity>
         </View>
@@ -138,25 +162,25 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 31,
-    fontWeight: '700',
-    color: '#1D2A32',
+    fontWeight: "700",
+    color: "#1D2A32",
     marginBottom: 6,
   },
   subtitle: {
     fontSize: 15,
-    fontWeight: '500',
-    color: '#929292',
+    fontWeight: "500",
+    color: "#929292",
   },
   /** Header */
   header: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     marginVertical: 36,
   },
   headerImg: {
     width: 170,
     height: 100,
-    alignSelf: 'center',
+    alignSelf: "center",
     marginBottom: 36,
   },
   /** Form */
@@ -173,16 +197,16 @@ const styles = StyleSheet.create({
   },
   formLink: {
     fontSize: 18,
-    fontWeight: '600',
-    color: '#FF6301',
-    textAlign: 'center',
+    fontWeight: "600",
+    color: "#FF6301",
+    textAlign: "center",
   },
   formFooter: {
     paddingVertical: 24,
     fontSize: 15,
-    fontWeight: '600',
-    color: '#222',
-    textAlign: 'center',
+    fontWeight: "600",
+    color: "#222",
+    textAlign: "center",
     letterSpacing: 0.15,
   },
   /** Input */
@@ -191,38 +215,38 @@ const styles = StyleSheet.create({
   },
   inputLabel: {
     fontSize: 17,
-    fontWeight: '600',
-    color: '#222',
+    fontWeight: "600",
+    color: "#222",
     marginBottom: 8,
   },
   inputControl: {
     height: 50,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     paddingHorizontal: 16,
     borderRadius: 12,
     fontSize: 15,
-    fontWeight: '500',
-    color: '#222',
+    fontWeight: "500",
+    color: "#222",
     borderWidth: 1,
-    borderColor: '#C9D3DB',
-    borderStyle: 'solid',
+    borderColor: "#C9D3DB",
+    borderStyle: "solid",
   },
   /** Button */
   btn: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
     borderRadius: 30,
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderWidth: 2,
-    backgroundColor: '#FCC714',
-    borderColor: '#FF6301',
+    backgroundColor: "#FCC714",
+    borderColor: "#FF6301",
   },
   btnText: {
     fontSize: 18,
     lineHeight: 26,
-    fontWeight: '600',
-    color: '#333',
+    fontWeight: "600",
+    color: "#333",
   },
 });
