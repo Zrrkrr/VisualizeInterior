@@ -57,7 +57,7 @@ export default function SignUp() {
           />
 
           <Text style={styles.title}>
-            Sign in to <Text style={{ color: "#FCC714" }}>Visua</Text>
+            Sign Up to <Text style={{ color: "#FCC714" }}>Visua</Text>
             <Text style={{ color: "#FF6301" }}>lize</Text>
           </Text>
 
@@ -131,7 +131,7 @@ export default function SignUp() {
               onPress={handleSignUp}
             >
               <View style={styles.btn}>
-                <Text style={styles.btnText}>Sign In</Text>
+                <Text style={styles.btnText}>Sign Up</Text>
               </View>
             </TouchableOpacity>
           </View>
