@@ -29,7 +29,7 @@ export default function Login() {
         password
       );
       const token = userCredential.user.stsTokenManager.accessToken;
-      navigation.navigate("Home");
+      navigation.navigate("BottomTab");
       
       
     } catch (error) {

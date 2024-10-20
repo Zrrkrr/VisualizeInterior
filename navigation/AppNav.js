@@ -1,25 +1,67 @@
-import * as React from "react";
-import { View, Text } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Login from "../screen/Login";
-import SignUp from "../screen/Signup";
+import React from "react";
+import { Image } from "react-native";
 import Home from "../screen/Home";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Camera from "../screen/Camera";
+import Login from "../screen/Login";
+import Signup from "../screen/Signup";
 
-const Stack = createNativeStackNavigator();
 
-function AppNav() {
+const Tab = createBottomTabNavigator();
+
+function BottomTab() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Camera" component={Camera} />
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="SignUp" component={SignUp} />
-        <Stack.Screen name="Home" component={Home} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({  size }) => {
+          let iconImage;
+
+          if (route.name === "Home") {
+            iconImage = require("../assets/aboutImg.png");
+          } else if (route.name === "Camera") {
+            iconImage = require("../assets/aboutImg.png");
+          }
+
+          return <Image source={iconImage} style={{ width: size, height: size }} />;
+        },
+        tabBarStyle:{
+          backgroundColor:"#F2F2F2",
+          borderColor:"#F4F4F4",
+          borderWidth:0,
+          borderBlockColor:"#F3F3F3",
+          elevation:0
+        }
+      })}
+      tabBarOptions={{
+        activeTintColor: "black",
+        inactiveTintColor: "gray",
+      }}
+    >
+      <Tab.Screen 
+      name = "Home"
+      component={Home}
+      options={{ headerShown: false, tabBarLabel: "",tabBarIconStyle:{marginTop:15} }} 
+      />
+      <Tab.Screen
+        name="Camera"
+        component={Camera}
+        options={{ headerShown: false, tabBarLabel: "",tabBarIconStyle:{marginTop:15} }}
+      />
+   
+    </Tab.Navigator>
   );
 }
 
-export default AppNav;
+const Stack = createNativeStackNavigator();
+export default function Appnav() {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Login" component={Login} /> 
+      <Stack.Screen name="Signup" component={Signup} /> 
+      <Stack.Screen name="BottomTab" component={BottomTab} />
+
+
+    </Stack.Navigator>
+  );
+}
