@@ -95,8 +95,8 @@ export default function App() {
         <>
           <CameraView style={styles.camera} ref={cameraRef} />
           <View style={styles.bottomControlsContainer}>
-            <TouchableOpacity onPress={takePicture}>
-              <Text style={styles.cameraButton}>Take Picture</Text>
+            <TouchableOpacity onPress={takePicture} style={styles.cameraButton}>
+              <Text >Take Picture</Text>
             </TouchableOpacity>
           </View>
         </>
@@ -121,8 +121,9 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#e8ecf5",
-    height: "90%",
+    backgroundColor: "#333",
+    height: "100%",
+    marginTop: "5%",
   },
   permissionContainer: {
     flex: 1,
@@ -140,12 +141,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   camera: {
-    height: "80%",
-    width: "80%",
+    height: "90%",
+    width: "100%",
   },
   bottomControlsContainer: {
     height: 100,
-    backgroundColor: 'black',
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
@@ -156,16 +156,16 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   buttonText: {
-    color: "#fff",
+    color: "#FF6301",
     fontSize: 16,
   },
   cameraButton: {
     fontSize: 18,
     color: "#fff",
-    backgroundColor: "#1cdfca",
+    backgroundColor: "#FCC714",
     paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 8,
-    marginTop: 40,
+    paddingVertical: 15,
+    borderRadius: 15,
+    marginBottom: 30,
   },
 });
