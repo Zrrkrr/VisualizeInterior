@@ -15,6 +15,7 @@
     "@react-navigation/native-stack": "^6.11.0",
     "expo": "~51.0.28",
     "expo-build-properties": "^0.12.5",
+    "expo-camera": "^15.0.14",
     "expo-media-library": "~16.0.5",
     "expo-status-bar": "~1.12.1",
     "firebase": "^10.14.1",
@@ -22,8 +23,7 @@
     "react-native": "0.74.5",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-safe-area-context": "^4.11.0",
-    "react-native-screens": "^3.34.0",
-    "expo-camera": "~15.0.16"
+    "react-native-screens": "^3.34.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
