@@ -40,7 +40,7 @@ export default function Login() {
 
   const navigation = useNavigation();
   const onSignup = () => {
-    navigation.navigate("SignUp");
+    navigation.navigate("Signup");
   };
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#e8ecf4" }}>
