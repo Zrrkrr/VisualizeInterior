@@ -122,7 +122,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#e8ecf5",
-    marginTop: 30,
     height: "90%",
   },
   permissionContainer: {
