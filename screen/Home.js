@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
 import {
   View,
   Text,
@@ -6,52 +7,48 @@ import {
   Image,
   TouchableOpacity,
   StyleSheet,
+  Dimensions,
+  ActivityIndicator,
+  Animated,
 } from "react-native";
 
-const VisualizeInterior = () => {
-  const images = [
-    { id: 1, source: require("../assets/HomeImgs/Frame1.png") },
-    { id: 2, source: require("../assets/HomeImgs/Frame2.png") },
-    { id: 3, source: require("../assets/HomeImgs/Frame3.png") },
-    { id: 4, source: require("../assets/HomeImgs/Frame4.png") },
-    { id: 5, source: require("../assets/HomeImgs/Frame5.png") },
-    { id: 6, source: require("../assets/HomeImgs/Frame6.png") },
-    { id: 7, source: require("../assets/HomeImgs/1.jpg") },
-    { id: 8, source: require("../assets/HomeImgs/2.jpg") },
-    { id: 9, source: require("../assets/HomeImgs/3.jpg") },
-    { id: 10, source: require("../assets/HomeImgs/4.jpg") },
-    { id: 11, source: require("../assets/HomeImgs/5.jpg") },
-    { id: 12, source: require("../assets/HomeImgs/6.jpg") },
-    { id: 13, source: require("../assets/HomeImgs/7.jpg") },
-    { id: 14, source: require("../assets/HomeImgs/8.jpg") },
-    { id: 15, source: require("../assets/HomeImgs/9.jpg") },
-    { id: 16, source: require("../assets/HomeImgs/10.jpg") },
-    { id: 17, source: require("../assets/HomeImgs/11.jpg") },
-    { id: 18, source: require("../assets/HomeImgs/12.jpg") },
-  ];
-  const logoi = require("../assets/visualize.png");
+const { width } = Dimensions.get("window");
+
+const Home = ({ route }) => {
+  const name = useSelector((state) => state.name.name); // Access the user's name
+  const images = useSelector((state) => state.images.images); // Access images from Redux store
 
   return (
     <View style={styles.container}>
-      {/* Navigation Bar */}
+      {/* Navbar (outside the gradient) */}
       <View style={styles.navBar}>
-        <Image source={logoi} style={styles.logoi} />
         <Text style={styles.title}>Explore</Text>
-        <TouchableOpacity style={styles.menuButton}>
-          <Text style={styles.menuText}>☰</Text>
-        </TouchableOpacity>
+        <Text style={styles.userNameText}>Hi, {name}</Text>
       </View>
 
-      {/* Image Gallery */}
-      <ScrollView contentContainerStyle={styles.imageGallery}>
-        {images.map((image) => (
-          <Image
-            key={image.id}
-            source={image.source}
-            style={styles.imageItem}
-          />
-        ))}
-      </ScrollView>
+      {/* Content Area (inside a simple View) */}
+      <View style={styles.gradientContainer}>
+        {/* Image Gallery */}
+        <ScrollView contentContainerStyle={styles.imageGallery}>
+          {images.map((image) => (
+            <Animated.View
+              key={image.id}
+              style={styles.imageContainer}
+              onLoadStart={() => <ActivityIndicator size="small" color="#000" />}
+            >
+              <TouchableOpacity
+                activeOpacity={0.8}
+                style={styles.imageItem}
+              >
+                <Image
+                  source={image.source}
+                  style={styles.imageItem}
+                />
+              </TouchableOpacity>
+            </Animated.View>
+          ))}
+        </ScrollView>
+      </View>
     </View>
   );
 };
@@ -59,30 +56,34 @@ const VisualizeInterior = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#fff", // Background color for the navbar
   },
   navBar: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: "#f5f5f5",
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    elevation: 3,
-  },
-  logo: {
-    fontSize: 24,
-    color: "#FFAA00", // Logo color matching the screenshot
+    backgroundColor: "#fff", // Navbar background color
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+    elevation: 5,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
   },
   title: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: "bold",
+    color: "#333", // Dark text for contrast
   },
-  menuButton: {
-    padding: 5,
+  userNameText: {
+    fontSize: 18,
+    fontWeight: "600",
+    color: "#333", // Dark text for contrast
   },
-  menuText: {
-    fontSize: 24,
+  gradientContainer: {
+    flex: 1, // Take up the remaining space below the navbar
+    backgroundColor: "#fff", // Set background color
   },
   imageGallery: {
     flexDirection: "row",
@@ -91,16 +92,23 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingVertical: 10,
   },
-  imageItem: {
+  imageContainer: {
     width: "48%",
-    maxHeight: 200,
-    borderRadius: 10,
-    marginBottom: 10,
+    marginBottom: 15,
+    borderRadius: 20, // Increased border radius for a modern feel
+    overflow: "hidden",
+    elevation: 5, // Improved shadow for a soft floating effect
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    backgroundColor: "#fff", // White background for images
   },
-  logoi: {
-    width: 30,
-    height: 30,
+  imageItem: {
+    width: "100%",
+    height: 200,
+    borderRadius: 20, // Increased border radius for a modern feel
   },
 });
 
-export default VisualizeInterior;
+export default Home;

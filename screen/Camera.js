@@ -1,171 +1,182 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import {
-  StyleSheet,
-  Text,
   View,
-  Image,
+  Text,
+  TextInput,
+  StyleSheet,
+  ActivityIndicator,
   Alert,
   TouchableOpacity,
+  Image
 } from "react-native";
-import { CameraView, useCameraPermissions } from "expo-camera";
-import * as MediaLibrary from "expo-media-library";
+import axios from "axios";
+import { STABILITY_API_KEY } from "@env";
+import { Buffer } from "buffer";
 
-export default function App() {
-  const [cameraPermission, requestCameraPermission] = useCameraPermissions();
-  const [mediaLibraryPermissionResponse, requestMediaLibraryPermission] =
-    MediaLibrary.usePermissions();
-  const [image, setImage] = useState(null);
+export default function Camera({ navigation }) {
+  const [prompt, setPrompt] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [generatedImage, setGeneratedImage] = useState(null);
 
-  const cameraRef = useRef(null);
-
-  useEffect(() => {
-    if (
-      cameraPermission?.granted &&
-      mediaLibraryPermissionResponse?.status === "granted"
-    ) {
-      getLastSavedImage();
+  const generateImage = async () => {
+    if (!prompt.trim()) {
+      Alert.alert("Error", "Please enter a prompt.");
+      return;
     }
-  }, [cameraPermission, mediaLibraryPermissionResponse]);
 
-  if (!cameraPermission || !mediaLibraryPermissionResponse) return <View />;
+    try {
+      setLoading(true);
+      setGeneratedImage(null);
 
-  if (
-    !cameraPermission.granted ||
-    mediaLibraryPermissionResponse.status !== "granted"
-  ) {
-    return (
-      <View style={styles.permissionContainer}>
-        <Text style={styles.permissionText}>
-          We need camera and gallery permissions to continue.
-        </Text>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            requestCameraPermission();
-            requestMediaLibraryPermission();
-          }}
-        >
-          <Text style={styles.buttonText}>Grant Permissions</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
+      // Create FormData payload
+      const formData = new FormData();
+      formData.append("prompt", prompt);
+      formData.append("output_format", "webp");
 
-  const takePicture = async () => {
-    if (cameraRef.current) {
-      try {
-        const picture = await cameraRef.current.takePictureAsync();
-        setImage(picture.uri);
-      } catch (err) {
-        console.log("Error while taking the picture: ", err);
+      const response = await axios.post(
+        "https://api.stability.ai/v2beta/stable-image/generate/core",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${STABILITY_API_KEY}`,
+            Accept: "image/*",
+            "Content-Type": "multipart/form-data",
+          },
+          responseType: "arraybuffer",
+        }
+      );
+
+      if (response.status === 200) {
+        // Convert array buffer to base64 for React Native
+        const base64Image = Buffer.from(response.data).toString("base64");
+        const imageUri = `data:image/webp;base64,${base64Image}`;
+        setGeneratedImage(imageUri);
+      } else {
+        throw new Error(`${response.status}: ${Buffer.from(response.data).toString()}`);
       }
-    }
-  };
-
-  const savePicture = async () => {
-    if (image) {
-      try {
-        const asset = await MediaLibrary.createAssetAsync(image);
-        Alert.alert("Photo saved!", image);
-        setImage(null);
-        getLastSavedImage();
-      } catch (err) {
-        console.log("Error while saving the picture: ", err);
+    } catch (error) {
+      console.error("Generation error:", error);
+      let errorMessage = "Failed to generate image";
+      
+      if (error.response) {
+        errorMessage = `${error.response.status}: ${Buffer.from(error.response.data).toString()}`;
+      } else if (error.message) {
+        errorMessage = error.message;
       }
-    }
-  };
 
-  const getLastSavedImage = async () => {
-    const dcimAlbum = await MediaLibrary.getAlbumAsync("DCIM");
-    if (dcimAlbum) {
-      const { assets } = await MediaLibrary.getAssetsAsync({
-        album: dcimAlbum,
-        sortBy: [[MediaLibrary.SortBy.creationTime, false]],
-        mediaType: MediaLibrary.MediaType.photo,
-        first: 1,
-      });
-
-      if (assets.length === 0) setImage(null);
+      Alert.alert("Error", errorMessage);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <View style={styles.container}>
-      {!image ? (
-        <>
-          <CameraView style={styles.camera} ref={cameraRef} />
-          <View style={styles.bottomControlsContainer}>
-            <TouchableOpacity onPress={takePicture} style={styles.cameraButton}>
-              <Text >Take Picture</Text>
-            </TouchableOpacity>
+      <View style={styles.contentContainer}>
+        <Text style={styles.title}>AI Image Generator</Text>
+        
+        <TextInput
+          style={styles.promptInput}
+          placeholder="Describe what you want to generate..."
+          placeholderTextColor="#bbb"
+          value={prompt}
+          onChangeText={setPrompt}
+          multiline
+          numberOfLines={4}
+        />
+
+        <TouchableOpacity
+          style={[styles.button, loading && styles.disabledButton]}
+          onPress={generateImage}
+          disabled={loading}
+        >
+          {loading ? (
+            <ActivityIndicator color="#fff" />
+          ) : (
+            <Text style={styles.buttonText}>Generate Image</Text>
+          )}
+        </TouchableOpacity>
+
+        {generatedImage && (
+          <View style={styles.imageContainer}>
+            <Image 
+              source={{ uri: generatedImage }} 
+              style={styles.generatedImage}
+              resizeMode="contain"
+            />
           </View>
-        </>
-      ) : (
-        <>
-          <Image source={{ uri: image }} style={styles.camera} />
-          <View style={styles.bottomControlsContainer}>
-            <TouchableOpacity onPress={() => setImage(null)}>
-              <Text style={styles.controlText}>Retake</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={savePicture}>
-              <Text style={styles.controlText}>Save</Text>
-            </TouchableOpacity>
-          </View>
-        </>
-      )}
+        )}
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#333",
-    height: "100%",
-    marginTop: "5%",
-  },
-  permissionContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#1a1a1a",
+    padding: 20,
+    backgroundColor: "#f5f5f5",
   },
-  permissionText: {
-    color: "#fff",
-    fontSize: 18,
-    marginBottom: 20,
-  },
-  controlText: {
-    color: "#fff",
-    fontSize: 16,
-  },
-  camera: {
-    height: "90%",
+  contentContainer: {
     width: "100%",
+    maxWidth: 500,
+    alignItems: "center",
   },
-  bottomControlsContainer: {
-    height: 100,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 20,
+    color: "#333",
+  },
+  promptInput: {
+    width: "100%",
+    backgroundColor: "#fff",
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 20,
+    fontSize: 16,
+    minHeight: 120,
+    color: "#000",
+    borderWidth: 1,
+    borderColor: "#ddd",
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 3 },
+    textAlignVertical: "top",
   },
   button: {
-    backgroundColor: "#0066ff",
-    padding: 12,
-    borderRadius: 8,
+    width: "100%",
+    backgroundColor: "#6e3bff",
+    padding: 16,
+    borderRadius: 12,
+    alignItems: "center",
+    shadowColor: "#6e3bff",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+  },
+  disabledButton: {
+    backgroundColor: "#a18dff",
+    shadowColor: "transparent",
   },
   buttonText: {
-    color: "#FF6301",
-    fontSize: 16,
-  },
-  cameraButton: {
-    fontSize: 18,
     color: "#fff",
-    backgroundColor: "#FCC714",
-    paddingHorizontal: 20,
-    paddingVertical: 15,
-    borderRadius: 15,
-    marginBottom: 30,
+    fontWeight: "bold",
+    fontSize: 18,
+  },
+  imageContainer: {
+    marginTop: 30,
+    width: "100%",
+    aspectRatio: 1,
+    backgroundColor: "#eee",
+    borderRadius: 12,
+    overflow: "hidden",
+  },
+  generatedImage: {
+    width: "100%",
+    height: "100%",
   },
 });

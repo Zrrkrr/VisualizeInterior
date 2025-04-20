@@ -10,67 +10,66 @@ const AboutUs = () => {
           source={require("../assets/visualize.png")}
           style={styles.logo}
         />
+        <Text style={styles.headerTitle}>About Us</Text>
       </View>
 
-      {/* Image Section */}
-      <Image
-        source={require("../assets/Members/Frame7.png")}
-        style={styles.mainImage}
-      />
+      {/* Main Content Section */}
+      <View style={styles.content}>
+        {/* About Us Text */}
+        <View style={styles.textContainer}>
+          <Text style={styles.description}>
+            At <Text style={styles.boldText}>Visualize Interior Design</Text>, we
+            turn your dreams into reality. Our passionate and talented interior
+            designers in Pune, Mumbai, Nashik, Aurangabad, Buldhana, Nagpur,
+            Bangalore, Wapi, Varodra, Surat, Ahmedabad, Rajkot will work with you
+            to bring your vision to life in no time.
+          </Text>
+          <Text style={styles.description}>
+            From concept to completion, we'll ensure that your home interior
+            design, commercial interior design, & office interior design project
+            is successful.
+          </Text>
+          <Text style={styles.description}>
+            We are a group of creative minds eager to take on creative challenges
+            and provide diverse design ideas for developing your spaces in Pune,
+            Mumbai, Nashik, Aurangabad, Buldhana, Nagpur, Bangalore, Wapi,
+            Varodra, Surat, Ahmedabad, Rajkot, and other cities.
+          </Text>
+        </View>
 
-      {/* About Us Text */}
-      <View style={styles.textContainer}>
-        <Text style={styles.title}>About Us</Text>
-        <Text style={styles.description}>
-          At <Text style={styles.boldText}>Visualize Interior</Text> Design, we
-          turn your dreams into reality. Our passionate and talented interior
-          designers in Pune, Thane, Kalyan, and Nashik will work with you to
-          bring your vision to life in no time.
-        </Text>
-        <Text style={styles.description}>
-          From concept to completion, we'll ensure that your home interior
-          design, commercial interior design, & office interior design project
-          is successful.
-        </Text>
-        <Text style={styles.description}>
-          We are a group of creative minds eager to take on creative challenges
-          and provide diverse design ideas for developing your spaces
-          (Home/Company/Institutions) in Pune, Thane, Kalyan, and Nashik.
-        </Text>
-      </View>
+        {/* Professional Team Section */}
+        <View style={styles.teamSection}>
+          <Text style={styles.teamTitle}>Meet Our Professional Team</Text>
+          <View style={styles.teamContainer}>
+            {/* Member 1 */}
+            <View style={styles.teamMember}>
+              <Image
+                source={require("../assets/Members/member3.png")}
+                style={styles.teamImage}
+              />
+              <Text style={styles.memberName}>Prakash Bheda</Text>
+              <Text style={styles.memberRole}>CEO and Founder</Text>
+            </View>
 
-      {/* Professional Team Section */}
-      <View style={styles.teamSection}>
-        <Text style={styles.teamTitle}>MEET OUR PROFESSIONAL TEAM</Text>
-        <View style={styles.teamContainer}>
-          {/* Member 3 */}
-          <View style={styles.teamMember}>
-            <Image
-              source={require("../assets/Members/member3.png")}
-              style={styles.teamImage}
-            />
-            <Text style={styles.memberName}>Prakash Bheda</Text>
-            <Text style={styles.memberRole}>CEO and Founder</Text>
-          </View>
-          
-          {/* Member 2 */}
-          <View style={styles.teamMember}>
-            <Image
-              source={require("../assets/Members/member2.png")}
-              style={styles.teamImage}
-            />
-            <Text style={styles.memberName}>Kunda Wankhede</Text>
-            <Text style={styles.memberRole}>Director and Co-Founder</Text>
-          </View>
+            {/* Member 2 */}
+            <View style={styles.teamMember}>
+              <Image
+                source={require("../assets/Members/member2.png")}
+                style={styles.teamImage}
+              />
+              <Text style={styles.memberName}>Kunda Wankhede</Text>
+              <Text style={styles.memberRole}>Director and Co-Founder</Text>
+            </View>
 
-          {/* Member 1 */}
-          <View style={styles.teamMember}>
-            <Image
-              source={require("../assets/Members/member1.png")}
-              style={styles.teamImage}
-            />
-            <Text style={styles.memberName}>Ujwal Bhadane</Text>
-            <Text style={styles.memberRole}>Interior Designer</Text>
+            {/* Member 3 */}
+            <View style={styles.teamMember}>
+              <Image
+                source={require("../assets/Members/member1.png")}
+                style={styles.teamImage}
+              />
+              <Text style={styles.memberName}>Ujwal Bhadane</Text>
+              <Text style={styles.memberRole}>Interior Designer</Text>
+            </View>
           </View>
         </View>
       </View>
@@ -81,69 +80,78 @@ const AboutUs = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#fff",
   },
   header: {
     alignItems: "center",
-    paddingVertical: 20,
-    backgroundColor: "#eef2f5",
+    paddingVertical: 15,
+    backgroundColor: "#f8f9fa",
   },
   logo: {
-    width: 50,
-    height: 50,
+    width: 60,
+    height: 60,
+    marginBottom: 10,
   },
-  mainImage: {
-    width: "100%",
-    height: 200,
-    resizeMode: "cover",
+  headerTitle: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#333",
+  },
+  content: {
+    paddingHorizontal: 20,
+    paddingVertical: 30,
   },
   textContainer: {
-    padding: 20,
-    backgroundColor: "#FFCC00",
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: "bold",
-    marginBottom: 10,
+    marginBottom: 30,
   },
   description: {
     fontSize: 16,
-    lineHeight: 22,
-    marginBottom: 10,
+    lineHeight: 26,
+    color: "#444",
+    marginBottom: 15,
+    textAlign: "justify",
   },
   boldText: {
     fontWeight: "bold",
+    color: "#000",
   },
   teamSection: {
-    padding: 20,
-    backgroundColor: "#fff",
+    marginTop: 20,
   },
   teamTitle: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: "bold",
+    color: "#333",
     marginBottom: 20,
     textAlign: "center",
   },
   teamContainer: {
     flexDirection: "row",
-    justifyContent: "space-around",
+    flexWrap: "wrap",
+    justifyContent: "center",
   },
   teamMember: {
+    width: "48%",
     alignItems: "center",
+    marginBottom: 20,
+    padding: 10,
   },
   teamImage: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    marginBottom: 10,
   },
   memberName: {
     fontSize: 16,
     fontWeight: "bold",
-    marginTop: 10,
+    color: "#333",
+    marginTop: 5,
   },
   memberRole: {
     fontSize: 14,
     color: "#666",
+    textAlign: "center",
   },
 });
 

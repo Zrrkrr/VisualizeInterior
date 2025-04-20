@@ -14,7 +14,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 // import home from "./Home";
 
-const logoImg = require("../assets/visualize.png");
+const logoImg = require("../assets/logo.png");
 
 export default function Login() {
 
@@ -54,8 +54,8 @@ export default function Login() {
           />
 
           <Text style={styles.title}>
-            Login to <Text style={{ color: "#FCC714" }}>Visua</Text>
-            <Text style={{ color: "#FF6301" }}>lize</Text>
+            Login to <Text style={{ color: "#9c466b" }}>Visualize</Text>
+            {/* <Text style={{ color: "#FF6301" }}>lize</Text> */}
           </Text>
 
           <Text style={styles.subtitle}>
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
   formLink: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#FF6301",
+    color: "#000000",
     textAlign: "center",
   },
   formFooter: {
@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     color: "#222",
     borderWidth: 1,
-    borderColor: "#C9D3DB",
+    borderColor: "#9c466b",
     borderStyle: "solid",
   },
   /** Button */
@@ -212,8 +212,8 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderWidth: 2,
-    backgroundColor: "#FCC714",
-    borderColor: "#FF6301",
+    backgroundColor: "#FFFFFF",
+    borderColor: "#9c466b",
   },
   btnText: {
     fontSize: 18,
