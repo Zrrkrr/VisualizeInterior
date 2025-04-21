@@ -14,7 +14,7 @@ import {
 
 const { width } = Dimensions.get("window");
 
-const Home = ({ route }) => {
+const Home = ({ route, navigation }) => {
   const name = useSelector((state) => state.name.name); // Access the user's name
   const images = useSelector((state) => state.images.images); // Access images from Redux store
 
@@ -39,6 +39,7 @@ const Home = ({ route }) => {
               <TouchableOpacity
                 activeOpacity={0.8}
                 style={styles.imageItem}
+                onPress={() => navigation.navigate('Description', { image })}
               >
                 <Image
                   source={image.source}

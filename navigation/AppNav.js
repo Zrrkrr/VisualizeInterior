@@ -9,6 +9,7 @@ import Login from "../screen/Login";
 import Signup from "../screen/Signup";
 import AboutUs from "../screen/AboutUs";
 import ImageDetailScreen from "../screen/ImageDetailScreen.js"; // Add this import
+import Description from "../screen/Description";
 
 const Tab = createBottomTabNavigator();
 
@@ -93,8 +94,7 @@ export default function AppNav() {
         gestureEnabled: true, // Enable swipe back on iOS
       }}
     >
-      {/* Uncomment when needed */}
-      {/* <Stack.Screen 
+      <Stack.Screen 
         name="Login" 
         component={Login} 
         options={{
@@ -107,7 +107,7 @@ export default function AppNav() {
         options={{
           animation: "slide_from_bottom",
         }}
-      /> */}
+      />
       
       <Stack.Screen 
         name="BottomTab" 
@@ -121,6 +121,14 @@ export default function AppNav() {
       <Stack.Screen 
         name="ImageDetail" 
         component={ImageDetailScreen}
+        options={{
+          animation: "slide_from_right",
+          gestureEnabled: true,
+        }}
+      />
+      <Stack.Screen 
+        name="Description" 
+        component={Description}
         options={{
           animation: "slide_from_right",
           gestureEnabled: true,
