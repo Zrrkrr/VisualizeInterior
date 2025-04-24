@@ -94,7 +94,7 @@ export default function AppNav() {
         gestureEnabled: true, // Enable swipe back on iOS
       }}
     >
-      <Stack.Screen 
+      {/* <Stack.Screen 
         name="Login" 
         component={Login} 
         options={{
@@ -107,7 +107,7 @@ export default function AppNav() {
         options={{
           animation: "slide_from_bottom",
         }}
-      />
+      /> */}
       
       <Stack.Screen 
         name="BottomTab" 
