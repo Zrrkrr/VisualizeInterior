@@ -1,28 +1,55 @@
 {
   "expo": {
-    "name": "VisualizeInterior",
+    "name": "Visualize Interior",
     "slug": "VisualizeInterior",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
+    "scheme": "visualize",
     "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff",
-      "jsEngine": "hermes"
-    },
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+        "backgroundColor": "#F6F1EA",
+        "foregroundImage": "./assets/adaptive-icon.png"
+      },
+      "predictiveBackGestureEnabled": false
     },
     "web": {
+      "output": "single",
       "favicon": "./assets/favicon.png"
-    } 
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#F6F1EA",
+          "image": "./assets/visualize.png",
+          "imageWidth": 120
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow Visualize to pick a photo of your room.",
+          "cameraPermission": "Allow Visualize to photograph your room."
+        }
+      ],
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "Allow Visualize to save designs to your photos.",
+          "savePhotosPermission": "Allow Visualize to save designs to your photos."
+        }
+      ],
+      "expo-sharing"
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    }
   }
 }
