@@ -5,6 +5,7 @@ import { useMemo, useState } from 'react';
 import { Pressable, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 
 import { inspirations, ROOM_TYPES, type Inspiration } from '@/content';
+import { Glass } from '@/Glass';
 import { useAuth } from '@/lib/auth';
 import { color, font, MAX_WIDTH, radius, space } from '@/theme';
 import { Body, Chip, ChipRow, Eyebrow, Heading, Screen, Title } from '@/ui';
@@ -56,10 +57,10 @@ export default function Explore() {
         <View style={{ gap: space(2) }}>
           <Text style={s.heroEyebrow}>New · AI Studio</Text>
           <Heading style={{ color: '#fff' }}>See your room, redesigned</Heading>
-          <View style={s.heroCta}>
+          <Glass style={s.heroCta}>
             <Text style={s.heroCtaText}>Try it now</Text>
             <Ionicons name="arrow-forward" size={16} color={color.text} />
-          </View>
+          </Glass>
         </View>
       </Pressable>
 
@@ -105,7 +106,6 @@ const s = StyleSheet.create({
     alignItems: 'center',
     gap: space(2),
     alignSelf: 'flex-start',
-    backgroundColor: color.bg,
     borderRadius: radius.pill,
     paddingHorizontal: space(4),
     paddingVertical: space(2),

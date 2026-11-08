@@ -3,6 +3,7 @@ import { Image } from 'expo-image';
 import { useRef, useState, type ComponentRef } from 'react';
 import { PanResponder, StyleSheet, Text, View } from 'react-native';
 
+import { Glass } from './Glass';
 import { color, font, radius } from './theme';
 
 /** Drag the handle to compare the original photo (left) with the redesign (right). */
@@ -42,8 +43,12 @@ export function BeforeAfter({ before, after, aspectRatio }: { before: string; af
       <View style={[s.clip, { width: width * split }]}>
         <Image source={{ uri: before }} style={{ width, height: '100%' }} contentFit="cover" />
       </View>
-      <Text style={[s.tag, { left: 12 }]}>Before</Text>
-      <Text style={[s.tag, { right: 12 }]}>After</Text>
+      <Glass tone="dark" pointerEvents="none" style={[s.tag, { left: 12 }]}>
+        <Text style={s.tagText}>Before</Text>
+      </Glass>
+      <Glass tone="dark" pointerEvents="none" style={[s.tag, { right: 12 }]}>
+        <Text style={s.tagText}>After</Text>
+      </Glass>
       <View pointerEvents="none" style={[s.line, { left: width * split - 1 }]}>
         <View style={s.knob}>
           <Ionicons name="code-outline" size={18} color={color.text} />
@@ -65,16 +70,6 @@ const s = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  tag: {
-    position: 'absolute',
-    top: 12,
-    fontFamily: font.semibold,
-    fontSize: 12,
-    color: '#fff',
-    backgroundColor: 'rgba(0,0,0,0.45)',
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: radius.pill,
-    overflow: 'hidden',
-  },
+  tag: { position: 'absolute', top: 12, paddingHorizontal: 10, paddingVertical: 4, borderRadius: radius.pill },
+  tagText: { fontFamily: font.semibold, fontSize: 12, color: '#fff' },
 });

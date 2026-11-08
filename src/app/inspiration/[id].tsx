@@ -5,6 +5,7 @@ import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { findInspiration } from '@/content';
+import { Glass } from '@/Glass';
 import { color, MAX_WIDTH, radius, space } from '@/theme';
 import { Body, Button, Eyebrow, Screen, Title } from '@/ui';
 
@@ -44,8 +45,10 @@ export default function InspirationDetail() {
         accessibilityRole="button"
         accessibilityLabel="Go back"
         onPress={goBack}
-        style={[s.back, { top: insets.top + space(2) }]}>
-        <Ionicons name="arrow-back" size={22} color={color.text} />
+        style={[s.backWrap, { top: insets.top + space(2) }]}>
+        <Glass interactive style={s.back}>
+          <Ionicons name="arrow-back" size={22} color={color.text} />
+        </Glass>
       </Pressable>
     </View>
   );
@@ -54,14 +57,6 @@ export default function InspirationDetail() {
 const s = StyleSheet.create({
   image: { width: '100%', maxWidth: MAX_WIDTH, alignSelf: 'center', height: 440, backgroundColor: color.surfaceAlt },
   body: { width: '100%', maxWidth: MAX_WIDTH, alignSelf: 'center', padding: space(5), gap: space(3) },
-  back: {
-    position: 'absolute',
-    left: space(4),
-    width: 44,
-    height: 44,
-    borderRadius: radius.pill,
-    backgroundColor: color.bg,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+  backWrap: { position: 'absolute', left: space(4) },
+  back: { width: 44, height: 44, borderRadius: radius.pill, alignItems: 'center', justifyContent: 'center' },
 });

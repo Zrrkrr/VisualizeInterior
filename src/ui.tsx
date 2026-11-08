@@ -2,6 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import type { ComponentProps, ReactNode } from 'react';
 import {
   ActivityIndicator,
+  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -151,7 +152,7 @@ export function Notice({ text, tone = 'error' }: { text: string; tone?: 'error' 
 
 const s = StyleSheet.create({
   screen: { flex: 1, backgroundColor: color.bg },
-  scroll: { flexGrow: 1, paddingBottom: space(10) },
+  scroll: { flexGrow: 1, paddingBottom: Platform.OS === 'ios' ? space(28) : space(10) },
   inner: { width: '100%', maxWidth: MAX_WIDTH, alignSelf: 'center', paddingHorizontal: space(5), gap: space(5) },
   title: { fontFamily: font.display, fontSize: 34, lineHeight: 42, color: color.text },
   heading: { fontFamily: font.display, fontSize: 22, lineHeight: 30, color: color.text },

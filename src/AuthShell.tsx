@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { Glass } from './Glass';
 import { color, font, radius, space } from './theme';
 import { Body, Eyebrow, Title } from './ui';
 
@@ -14,12 +15,12 @@ export function AuthShell({ title, subtitle, children }: { title: string; subtit
       <SafeAreaView style={{ flex: 1 }}>
         <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
           <ScrollView contentContainerStyle={s.scroll} keyboardShouldPersistTaps="handled">
-            <View style={s.card}>
+            <Glass style={s.card}>
               <Eyebrow>Visualize Interior</Eyebrow>
               <Title>{title}</Title>
               <Body muted>{subtitle}</Body>
               <View style={{ gap: space(4), marginTop: space(2) }}>{children}</View>
-            </View>
+            </Glass>
           </ScrollView>
         </KeyboardAvoidingView>
       </SafeAreaView>
@@ -35,7 +36,6 @@ const s = StyleSheet.create({
     width: '100%',
     maxWidth: 460,
     alignSelf: 'center',
-    backgroundColor: color.bg,
     borderRadius: radius.lg,
     padding: space(6),
     gap: space(2),
