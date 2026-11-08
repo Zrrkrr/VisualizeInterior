@@ -175,6 +175,7 @@ const s = StyleSheet.create({
   secondary: { borderWidth: 1, borderColor: color.text, backgroundColor: 'transparent' },
   buttonText: { fontFamily: font.semibold, fontSize: 16 },
   chip: {
+    maxWidth: '100%',
     minHeight: 40,
     paddingHorizontal: space(4),
     paddingVertical: space(2),

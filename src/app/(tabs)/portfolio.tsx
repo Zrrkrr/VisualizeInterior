@@ -49,7 +49,7 @@ const s = StyleSheet.create({
   listWide: { flexDirection: 'row', flexWrap: 'wrap' },
   card: { borderRadius: radius.lg, overflow: 'hidden', backgroundColor: color.surface },
   cardWide: { width: '48%', flexGrow: 1 },
-  image: { width: '100%', aspectRatio: 4 / 5 },
+  image: { width: '100%', aspectRatio: 4 / 5, backgroundColor: color.surfaceAlt },
   cardBody: { padding: space(5), gap: space(1.5) },
   category: { fontFamily: font.semibold, fontSize: 12, letterSpacing: 1.2, textTransform: 'uppercase', color: color.primary },
   title: { fontFamily: font.display, fontSize: 22, color: color.text },

@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getApp, getApps, initializeApp } from 'firebase/app';
 // @ts-expect-error -- exported by firebase/auth's react-native build, missing from the web typings
-import { getAuth, getReactNativePersistence, initializeAuth, type Auth } from 'firebase/auth';
+import { connectAuthEmulator, getAuth, getReactNativePersistence, initializeAuth, type Auth } from 'firebase/auth';
 import { Platform } from 'react-native';
 
 // Firebase web config is public by design; access is controlled by Firebase Auth and security rules.
@@ -21,3 +21,6 @@ export const auth: Auth =
   Platform.OS === 'web' || !fresh
     ? getAuth(app)
     : initializeAuth(app, { persistence: getReactNativePersistence(AsyncStorage) });
+
+// Local testing only: `EXPO_PUBLIC_AUTH_EMULATOR=http://127.0.0.1:9099 npx expo start`
+if (process.env.EXPO_PUBLIC_AUTH_EMULATOR && fresh) connectAuthEmulator(auth, process.env.EXPO_PUBLIC_AUTH_EMULATOR);

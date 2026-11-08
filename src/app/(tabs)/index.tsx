@@ -18,7 +18,7 @@ function Tile({ item, height }: { item: Inspiration; height: number }) {
       accessibilityLabel={item.title}
       onPress={() => router.push(`/inspiration/${item.id}`)}
       style={({ pressed }) => [s.tile, pressed && { opacity: 0.85 }]}>
-      <Image source={item.image} style={{ width: '100%', height }} contentFit="cover" transition={200} />
+      <Image source={item.image} style={{ width: '100%', height, backgroundColor: color.surfaceAlt }} contentFit="cover" transition={200} />
       <View style={s.tileText}>
         <Text style={s.tileTitle} numberOfLines={1}>
           {item.title}

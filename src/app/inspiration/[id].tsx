@@ -52,7 +52,7 @@ export default function InspirationDetail() {
 }
 
 const s = StyleSheet.create({
-  image: { width: '100%', maxWidth: MAX_WIDTH, alignSelf: 'center', height: 440 },
+  image: { width: '100%', maxWidth: MAX_WIDTH, alignSelf: 'center', height: 440, backgroundColor: color.surfaceAlt },
   body: { width: '100%', maxWidth: MAX_WIDTH, alignSelf: 'center', padding: space(5), gap: space(3) },
   back: {
     position: 'absolute',
